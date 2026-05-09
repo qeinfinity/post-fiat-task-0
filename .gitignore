@@ -2,8 +2,21 @@ node_modules/
 dist/
 .worktrees/
 *.tsbuildinfo
-.autopilot/runs/
-.autopilot/sessions/
+__pycache__/
+
+# Proprietary agent orchestration and persistence framework.
+.agents/
+.autopilot/
+.mcp.json
+.conductor-state.json
+.conductor-state*.json
+docs/agent/
+docs/security/
+mcp/
+scripts/autopilot
+scripts/ci
+scripts/dev
+
 .env
 .env.*
 !.env.example
@@ -11,6 +24,8 @@ dist/
 *.key
 *.p12
 *.pfx
+.DS_Store
+playwright-mcp-smoke.png
 playwright-report/
 test-results/
 .playwright-mcp/
