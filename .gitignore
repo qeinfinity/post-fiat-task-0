@@ -29,5 +29,7 @@ playwright-mcp-smoke.png
 playwright-report/
 test-results/
 .playwright-mcp/
-.autopilot
-.agents
+.autopilot/
+.agents/
+.docs/
+.mcp/
