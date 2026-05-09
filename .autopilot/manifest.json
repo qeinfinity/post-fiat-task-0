@@ -1,0 +1,52 @@
+{
+  "manifestVersion": 1,
+  "project": {
+    "name": "crypto-vol-dislocation-scanner",
+    "description": "Single-artifact BTC/ETH Deribit options implied-volatility dislocation scanner with CLI tables and a browser dashboard."
+  },
+  "stack": {
+    "language": "Python",
+    "runtime": "Python 3",
+    "framework": "Python standard library HTTP dashboard"
+  },
+  "commands": {
+    "build": [
+      {
+        "cmd": "python3",
+        "args": ["-m", "py_compile", "crypto_vol_dislocation_scanner.py"],
+        "timeoutMs": 600000
+      }
+    ],
+    "test": [
+      {
+        "cmd": "python3",
+        "args": ["crypto_vol_dislocation_scanner.py", "--max-expiries", "6", "--top", "3"],
+        "timeoutMs": 600000
+      }
+    ],
+    "start": [
+      {
+        "cmd": "python3",
+        "args": [
+          "crypto_vol_dislocation_scanner.py",
+          "--serve",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "8765",
+          "--max-expiries",
+          "6",
+          "--top",
+          "3"
+        ],
+        "timeoutMs": 600000
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "path": "crypto_vol_dislocation_scanner.py",
+      "description": "Runnable scanner artifact for CLI output and dashboard serving."
+    }
+  ]
+}

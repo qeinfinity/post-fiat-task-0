@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.worktrees/
+*.tsbuildinfo
+.autopilot/runs/
+.autopilot/sessions/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+playwright-report/
+test-results/
+.playwright-mcp/

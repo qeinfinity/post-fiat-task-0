@@ -1,0 +1,157 @@
+{
+  "policyVersion": 1,
+  "mode": "sealed",
+  "network": {
+    "default": "deny",
+    "allowDomains": [
+      "registry.npmjs.org",
+      "pypi.org",
+      "files.pythonhosted.org",
+      "crates.io",
+      "index.crates.io",
+      "proxy.golang.org"
+    ]
+  },
+  "env": {
+    "inherit": false,
+    "allow": [
+      "PATH",
+      "HOME",
+      "USER",
+      "SHELL",
+      "TMPDIR",
+      "LANG",
+      "LC_ALL",
+      "CI",
+      "NODE_ENV",
+      "npm_config_cache",
+      "npm_config_prefix"
+    ],
+    "allowPrefixes": [
+      "npm_config_"
+    ],
+    "deny": [
+      "OPENAI_API_KEY",
+      "ANTHROPIC_API_KEY",
+      "LMSTUDIO_API_KEY",
+      "GITHUB_TOKEN",
+      "GH_TOKEN",
+      "AWS_ACCESS_KEY_ID",
+      "AWS_SECRET_ACCESS_KEY",
+      "SSH_AUTH_SOCK"
+    ]
+  },
+  "commands": {
+    "allow": [
+      { "cmd": "bash", "argsExact": ["scripts/ci"], "phases": ["ci"] },
+      { "cmd": "bash", "argsExact": ["scripts/dev"], "phases": ["start"] },
+      { "cmd": "npm", "argsPrefix": ["ci"], "phases": ["bootstrap"] },
+      { "cmd": "npm", "argsPrefix": ["install"], "phases": ["bootstrap"] },
+      { "cmd": "npm", "argsPrefix": ["audit"], "phases": ["dependency-audit"] },
+      { "cmd": "npm", "argsPrefix": ["run"] },
+      { "cmd": "npm", "argsPrefix": ["test"] },
+      { "cmd": "npx", "argsPrefix": ["--no-install"] },
+      { "cmd": "pnpm", "argsPrefix": ["install"], "phases": ["bootstrap"] },
+      { "cmd": "pnpm", "argsPrefix": ["run"] },
+      { "cmd": "pnpm", "argsPrefix": ["test"] },
+      { "cmd": "yarn", "argsPrefix": ["install"], "phases": ["bootstrap"] },
+      { "cmd": "yarn", "argsPrefix": ["run"] },
+      { "cmd": "yarn", "argsPrefix": ["test"] },
+      { "cmd": "bun", "argsPrefix": ["install"], "phases": ["bootstrap"] },
+      { "cmd": "bun", "argsPrefix": ["run"] },
+      { "cmd": "bun", "argsPrefix": ["test"] },
+      { "cmd": "node" },
+      { "cmd": "python" },
+      { "cmd": "python3" },
+      { "cmd": "pytest" },
+      { "cmd": "uv" },
+      { "cmd": "cargo" },
+      { "cmd": "go" },
+      { "cmd": "make" },
+      { "cmd": "dotnet" }
+    ],
+    "deny": [
+      "rm",
+      "curl",
+      "wget",
+      "ssh",
+      "scp",
+      "sftp",
+      "nc",
+      "netcat",
+      "ncat",
+      "telnet",
+      "ftp",
+      "gh",
+      "git",
+      "sudo",
+      "su",
+      "chmod",
+      "chown",
+      "security",
+      "pbpaste",
+      "pbcopy",
+      "osascript"
+    ],
+    "denyArgsContaining": [
+      "rm -rf",
+      "curl ",
+      "wget ",
+      "| sh",
+      "| bash",
+      ">/dev/tcp",
+      "base64 -d",
+      "chmod 777",
+      "sudo ",
+      "gh auth",
+      "git push",
+      "git remote",
+      "ssh ",
+      "scp "
+    ],
+    "maxTimeoutMs": 600000
+  },
+  "filesystem": {
+    "writeRoots": [
+      "."
+    ],
+    "denyWrites": [
+      ".git",
+      ".env",
+      ".env.local",
+      ".env.production",
+      ".mcp.json",
+      ".agents/security-policy.json",
+      ".agents/agent-profiles.json",
+      ".agents/model-providers.json"
+    ],
+    "protectedPaths": [
+      "docs/security",
+      "mcp/conductor",
+      "scripts/autopilot"
+    ]
+  },
+  "logs": {
+    "redact": true,
+    "retainDays": 7,
+    "fullScrollbackRequiresReason": true
+  },
+  "completionGates": {
+    "secretScan": true,
+    "commandPolicy": true,
+    "dependencyAudit": true,
+    "manualBrowserValidation": true,
+    "playwrightValidation": true
+  },
+  "modelProviders": {
+    "remoteDefault": "deny",
+    "allowedProfiles": [
+      "omlx-local",
+      "openai-cloud",
+      "claude-cloud"
+    ],
+    "remoteRequiresExplicitOptIn": true,
+    "maxPromptDataClass": "sensitive",
+    "forbidRestrictedData": true
+  }
+}
