@@ -1,0 +1,249 @@
+{
+  "venue_map_version": "2026-05-13.public-metadata.v1",
+  "generated_at_utc": "2026-05-13T06:21:00Z",
+  "scope": {
+    "purpose": "Public metadata QA fixture for crypto nonlinear-derivatives venue semantics.",
+    "data_class": "public_metadata_only",
+    "non_goals": [
+      "comparative venue scoring",
+      "trade-decision derivation",
+      "private model parameter disclosure",
+      "order-routing guidance",
+      "user-specific state"
+    ]
+  },
+  "required_row_fields": [
+    "surface_id",
+    "venue_id",
+    "venue_name",
+    "product_family",
+    "underlying_exposure",
+    "contract_type",
+    "quote_asset",
+    "collateral_asset",
+    "settlement_asset",
+    "settlement_style",
+    "instrument_semantics",
+    "session_caveats",
+    "timestamp_caveats",
+    "public_source_urls",
+    "source_freshness",
+    "degradation",
+    "explicit_unknowns"
+  ],
+  "rows": [
+    {
+      "surface_id": "deribit_btc_options_public_metadata",
+      "venue_id": "deribit",
+      "venue_name": "Deribit",
+      "product_family": "crypto_option",
+      "underlying_exposure": "BTC index exposure through listed crypto option instruments",
+      "contract_type": "european_option",
+      "quote_asset": "USD index reference",
+      "collateral_asset": "BTC for representative BTC option surface",
+      "settlement_asset": "BTC",
+      "settlement_style": "crypto-settled option mechanics; public metadata should not be merged with cash-settled or ETF-share options without an explicit settlement field",
+      "instrument_semantics": {
+        "normalized_surface_key": "deribit.option.BTC.crypto_settled",
+        "symbol_examples_are_synthetic": true,
+        "requires_expiry_and_strike": true,
+        "requires_put_call_flag": true
+      },
+      "session_caveats": [
+        "Crypto exchange surface is generally observable on a continuous market schedule, subject to venue maintenance and public API availability."
+      ],
+      "timestamp_caveats": [
+        "Fixture checks that timestamp caveats are present; it does not assert live endpoint freshness."
+      ],
+      "public_source_urls": [
+        "https://docs.deribit.com/"
+      ],
+      "source_freshness": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T06:21:00Z",
+        "reason": "Fixture is public metadata, not a live endpoint probe."
+      },
+      "degradation": {
+        "degraded": true,
+        "severity": "info",
+        "reasons": [
+          "metadata fixture only",
+          "no live endpoint freshness assertion"
+        ],
+        "block_reason": ""
+      },
+      "explicit_unknowns": []
+    },
+    {
+      "surface_id": "cme_btc_options_on_futures_public_metadata",
+      "venue_id": "cme",
+      "venue_name": "CME Group",
+      "product_family": "crypto_option_on_futures",
+      "underlying_exposure": "CME Bitcoin futures contract exposure rather than native spot BTC or ETF shares",
+      "contract_type": "option_on_futures",
+      "quote_asset": "USD",
+      "collateral_asset": "USD clearing and margin context",
+      "settlement_asset": "futures_contract",
+      "settlement_style": "listed option on a regulated futures contract; do not merge with native crypto option settlement semantics",
+      "instrument_semantics": {
+        "normalized_surface_key": "cme.option_on_future.BTC.cash_margin_context",
+        "symbol_examples_are_synthetic": true,
+        "requires_expiry_and_strike": true,
+        "requires_put_call_flag": true
+      },
+      "session_caveats": [
+        "Public metadata must preserve regulated futures venue session and holiday caveats separately from 24/7 crypto exchange surfaces."
+      ],
+      "timestamp_caveats": [
+        "Public market-data timestamps may reflect the chosen CME data surface, not a native crypto exchange clock."
+      ],
+      "public_source_urls": [
+        "https://www.cmegroup.com/markets/cryptocurrencies/bitcoin/bitcoin.contractSpecs.options.html"
+      ],
+      "source_freshness": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T06:21:00Z",
+        "reason": "Fixture records metadata semantics only."
+      },
+      "degradation": {
+        "degraded": false,
+        "severity": "none",
+        "reasons": [],
+        "block_reason": ""
+      },
+      "explicit_unknowns": []
+    },
+    {
+      "surface_id": "ibit_listed_etf_share_options_public_metadata",
+      "venue_id": "listed_us_options",
+      "venue_name": "US listed options venues",
+      "product_family": "listed_etf_share_option",
+      "underlying_exposure": "IBIT ETF share exposure; this is not a native BTC option contract",
+      "contract_type": "listed_equity_option",
+      "quote_asset": "USD",
+      "collateral_asset": "USD clearing context",
+      "settlement_asset": "ETF shares or cash-equivalent clearing obligations according to listed option rules",
+      "settlement_style": "listed ETF-share option semantics; attribution should separate ETF-share hedging from native BTC option and perpetual surfaces",
+      "instrument_semantics": {
+        "normalized_surface_key": "us_listed_option.IBIT.etf_share",
+        "symbol_examples_are_synthetic": true,
+        "requires_occ_option_symbol_components": true,
+        "requires_put_call_flag": true
+      },
+      "session_caveats": [
+        "US listed options trading sessions and holidays differ from 24/7 crypto venues."
+      ],
+      "timestamp_caveats": [
+        "Public option-chain pages and consolidated feeds may have display, entitlement, or delay caveats that should be recorded outside this fixture."
+      ],
+      "public_source_urls": [
+        "https://www.nasdaq.com/market-activity/etf/ibit/option-chain",
+        "https://www.theocc.com/clearance-and-settlement/clearing/equity-options-product-specifications"
+      ],
+      "source_freshness": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T06:21:00Z",
+        "reason": "Fixture separates venue semantics from live option-chain freshness."
+      },
+      "degradation": {
+        "degraded": true,
+        "severity": "info",
+        "reasons": [
+          "listed option display delays and entitlement caveats are source-specific"
+        ],
+        "block_reason": ""
+      },
+      "explicit_unknowns": []
+    },
+    {
+      "surface_id": "okx_btc_options_public_metadata",
+      "venue_id": "okx",
+      "venue_name": "OKX",
+      "product_family": "crypto_option",
+      "underlying_exposure": "BTC crypto option metadata exposed by public instrument endpoints",
+      "contract_type": "crypto_option",
+      "quote_asset": "USD index reference",
+      "collateral_asset": "unknown",
+      "settlement_asset": "unknown",
+      "settlement_style": "public metadata row intentionally records unresolved margin and settlement details as explicit unknowns rather than assuming Deribit-like semantics",
+      "instrument_semantics": {
+        "normalized_surface_key": "okx.option.BTC.explicit_unknown_settlement",
+        "symbol_examples_are_synthetic": true,
+        "requires_expiry_and_strike": true,
+        "requires_put_call_flag": true
+      },
+      "session_caveats": [
+        "Crypto exchange surface is generally observable on a continuous market schedule, subject to venue maintenance and public API availability."
+      ],
+      "timestamp_caveats": [
+        "Public instrument metadata should be paired with endpoint capture timestamps before being used as an ingestion fact."
+      ],
+      "public_source_urls": [
+        "https://www.okx.com/docs-v5/en/#public-data-rest-api-get-instruments"
+      ],
+      "source_freshness": {
+        "status": "degraded",
+        "as_of_utc": "2026-05-13T06:21:00Z",
+        "reason": "Settlement and collateral semantics are left as explicit unknowns for reviewer-safe metadata handling."
+      },
+      "degradation": {
+        "degraded": true,
+        "severity": "warning",
+        "reasons": [
+          "collateral_asset unknown",
+          "settlement_asset unknown"
+        ],
+        "block_reason": ""
+      },
+      "explicit_unknowns": [
+        {
+          "field": "collateral_asset",
+          "reason": "Public-safe fixture does not assert account-level margin details."
+        },
+        {
+          "field": "settlement_asset",
+          "reason": "Public-safe fixture keeps settlement semantics unresolved until a current public contract-spec source is checked."
+        }
+      ]
+    },
+    {
+      "surface_id": "bybit_btcusdt_perpetual_public_reference",
+      "venue_id": "bybit",
+      "venue_name": "Bybit",
+      "product_family": "crypto_perpetual_reference",
+      "underlying_exposure": "BTC perpetual swap reference used only as a public hedging-context metadata surface",
+      "contract_type": "linear_perpetual_swap",
+      "quote_asset": "USDT",
+      "collateral_asset": "USDT",
+      "settlement_asset": "USDT",
+      "settlement_style": "linear perpetual swap reference; not an option and not a substitute for nonlinear option open interest",
+      "instrument_semantics": {
+        "normalized_surface_key": "bybit.perpetual.BTCUSDT.linear",
+        "symbol_examples_are_synthetic": true,
+        "requires_funding_context": true,
+        "requires_no_put_call_flag": true
+      },
+      "session_caveats": [
+        "Crypto perpetual references are generally observable on a continuous market schedule, subject to venue maintenance and public API availability."
+      ],
+      "timestamp_caveats": [
+        "Perpetual public data should keep funding, mark, index, and trade timestamps distinct."
+      ],
+      "public_source_urls": [
+        "https://bybit-exchange.github.io/docs/v5/market/instrument"
+      ],
+      "source_freshness": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T06:21:00Z",
+        "reason": "Fixture records reference-surface semantics only."
+      },
+      "degradation": {
+        "degraded": false,
+        "severity": "none",
+        "reasons": [],
+        "block_reason": ""
+      },
+      "explicit_unknowns": []
+    }
+  ]
+}
