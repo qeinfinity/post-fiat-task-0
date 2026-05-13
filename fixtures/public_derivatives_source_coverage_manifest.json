@@ -1,0 +1,169 @@
+{
+  "manifest_version": "2026-05-13.public-source-coverage.v1",
+  "generated_at_utc": "2026-05-13T08:35:00Z",
+  "scope": {
+    "purpose": "Public source-coverage provenance manifest for crypto nonlinear-derivatives ingestion preflight checks.",
+    "data_class": "public_metadata_only",
+    "probe_policy": "bounded public HTTP checks only; no credentials, cookies, wallet material, account state, or private endpoints",
+    "non_goals": [
+      "live market-data collection",
+      "comparative source scoring",
+      "trade-decision derivation",
+      "private model disclosure",
+      "order-routing guidance",
+      "user-specific state"
+    ]
+  },
+  "required_source_fields": [
+    "source_id",
+    "source_url",
+    "venue_label",
+    "product_family",
+    "expected_content_type",
+    "auth_requirement",
+    "timestamp_or_session_caveat",
+    "freshness_or_degradation_status",
+    "unsupported_cases",
+    "safe_failure_reasons"
+  ],
+  "sources": [
+    {
+      "source_id": "deribit_btc_options_public_instruments_api",
+      "source_url": "https://www.deribit.com/api/v2/public/get_instruments?currency=BTC&kind=option&expired=false",
+      "venue_label": "Deribit",
+      "product_family": "crypto_option",
+      "expected_content_type": "json",
+      "auth_requirement": "none_public_endpoint",
+      "timestamp_or_session_caveat": "Continuous crypto exchange endpoint; response freshness is only known at probe time and is not interpreted as a book, trade, or risk surface.",
+      "freshness_or_degradation_status": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T08:35:00Z",
+        "reason": "Manifest records source coverage and content type, not live economic state."
+      },
+      "unsupported_cases": [
+        "Does not prove option liquidity or open-interest coverage.",
+        "Does not normalize strike, expiry, settlement, or collateral semantics."
+      ],
+      "safe_failure_reasons": [
+        "Network timeout",
+        "Venue maintenance window",
+        "Public endpoint rate limit"
+      ]
+    },
+    {
+      "source_id": "cme_bitcoin_options_contract_specs_page",
+      "source_url": "https://www.cmegroup.com/markets/cryptocurrencies/bitcoin/bitcoin.contractSpecs.options.html",
+      "venue_label": "CME Group",
+      "product_family": "crypto_option_on_futures",
+      "expected_content_type": "html",
+      "auth_requirement": "none_public_page",
+      "timestamp_or_session_caveat": "Regulated futures-options product page; trading session and delayed quote behavior are separate from public product-specification availability.",
+      "freshness_or_degradation_status": {
+        "status": "degraded",
+        "as_of_utc": "2026-05-13T08:35:00Z",
+        "reason": "Public browser page may time out or reject lightweight automated probes while remaining inspectable in a browser."
+      },
+      "unsupported_cases": [
+        "Does not collect live CME quotes.",
+        "Does not infer futures-option positioning or hedge impact."
+      ],
+      "safe_failure_reasons": [
+        "HTTP timeout",
+        "Browser-oriented public page",
+        "Temporary public-site availability issue"
+      ]
+    },
+    {
+      "source_id": "nasdaq_ibit_option_chain_page",
+      "source_url": "https://www.nasdaq.com/market-activity/etf/ibit/option-chain",
+      "venue_label": "Nasdaq",
+      "product_family": "listed_etf_share_option",
+      "expected_content_type": "html",
+      "auth_requirement": "none_public_page",
+      "timestamp_or_session_caveat": "Listed ETF-share option page; equity-session timing and page-delivery behavior differ from native crypto venue APIs.",
+      "freshness_or_degradation_status": {
+        "status": "degraded",
+        "as_of_utc": "2026-05-13T08:35:00Z",
+        "reason": "Public browser page may challenge or reject simple automated probes while still serving public readers."
+      },
+      "unsupported_cases": [
+        "Does not scrape option-chain rows.",
+        "Does not map ETF-share exposure into native BTC option greeks."
+      ],
+      "safe_failure_reasons": [
+        "Browser-oriented public page",
+        "HTTP challenge",
+        "Temporary public-site availability issue"
+      ]
+    },
+    {
+      "source_id": "okx_btc_options_public_instruments_api",
+      "source_url": "https://www.okx.com/api/v5/public/instruments?instType=OPTION&uly=BTC-USD",
+      "venue_label": "OKX",
+      "product_family": "crypto_option",
+      "expected_content_type": "json",
+      "auth_requirement": "none_public_endpoint",
+      "timestamp_or_session_caveat": "Public exchange instruments endpoint; source coverage does not assert live orderbook availability or trade continuity.",
+      "freshness_or_degradation_status": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T08:35:00Z",
+        "reason": "Manifest records endpoint provenance only."
+      },
+      "unsupported_cases": [
+        "Does not collect orderbooks, trades, or account-specific state.",
+        "Does not assert complete global option venue coverage."
+      ],
+      "safe_failure_reasons": [
+        "Network timeout",
+        "Public endpoint rate limit",
+        "Venue maintenance window"
+      ]
+    },
+    {
+      "source_id": "bybit_btc_options_public_instruments_api",
+      "source_url": "https://api.bybit.com/v5/market/instruments-info?category=option&baseCoin=BTC",
+      "venue_label": "Bybit",
+      "product_family": "crypto_option",
+      "expected_content_type": "json",
+      "auth_requirement": "none_public_endpoint",
+      "timestamp_or_session_caveat": "Public exchange instruments endpoint; pagination and listing schedules are separate from this provenance check.",
+      "freshness_or_degradation_status": {
+        "status": "unknown",
+        "as_of_utc": "2026-05-13T08:35:00Z",
+        "reason": "Manifest records endpoint provenance only."
+      },
+      "unsupported_cases": [
+        "Does not collect user positions or balances.",
+        "Does not assert complete historical instrument coverage."
+      ],
+      "safe_failure_reasons": [
+        "Network timeout",
+        "Public endpoint rate limit",
+        "Venue maintenance window"
+      ]
+    },
+    {
+      "source_id": "okx_swap_public_instruments_reference_api",
+      "source_url": "https://www.okx.com/api/v5/public/instruments?instType=SWAP",
+      "venue_label": "OKX",
+      "product_family": "crypto_perpetual_reference",
+      "expected_content_type": "json",
+      "auth_requirement": "none_public_endpoint",
+      "timestamp_or_session_caveat": "Public perpetual-swap instruments reference; included only as a CEX derivatives coverage reference and not as a nonlinear option surface.",
+      "freshness_or_degradation_status": {
+        "status": "unsupported",
+        "as_of_utc": "2026-05-13T08:35:00Z",
+        "reason": "Perpetual references are useful for coverage adjacency but should not be merged into native option surfaces."
+      },
+      "unsupported_cases": [
+        "Not a listed option source.",
+        "Not a volatility surface source.",
+        "Not a replacement for option-chain metadata."
+      ],
+      "safe_failure_reasons": [
+        "Endpoint unavailable",
+        "Coverage intentionally marked unsupported for option-only ingestion"
+      ]
+    }
+  ]
+}
