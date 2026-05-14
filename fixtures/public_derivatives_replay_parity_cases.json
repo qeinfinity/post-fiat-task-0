@@ -1,0 +1,283 @@
+{
+  "harness_version": "1.0",
+  "generated_at_utc": "2026-05-14T00:24:00Z",
+  "scope": {
+    "description": "Synthetic public-safe replay/parity cases for crypto derivatives ingestion QA.",
+    "data_origin": "synthetic_fixture_only",
+    "contains_live_market_data": false,
+    "contains_user_specific_data": false
+  },
+  "required_case_fields": [
+    "case_id",
+    "intent",
+    "expected_status",
+    "expected_finding_codes",
+    "records"
+  ],
+  "required_record_fields": [
+    "record_id",
+    "event_time_utc",
+    "available_at_utc",
+    "payload",
+    "replay",
+    "provenance"
+  ],
+  "cases": [
+    {
+      "case_id": "valid_ordered_public_synthetic",
+      "intent": "valid ordered public-safe replay records",
+      "expected_status": "pass",
+      "expected_finding_codes": [],
+      "records": [
+        {
+          "record_id": "valid-001",
+          "event_time_utc": "2026-05-14T00:00:00Z",
+          "available_at_utc": "2026-05-14T00:00:02Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "option_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "book_snapshot_seen"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:00:05Z",
+            "sequence_number": 1,
+            "deterministic_record_id": "sha256:827c5fad09a78bc3aa74e23e"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        },
+        {
+          "record_id": "valid-002",
+          "event_time_utc": "2026-05-14T00:00:03Z",
+          "available_at_utc": "2026-05-14T00:00:04Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "perpetual_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "funding_marker_seen"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:00:05Z",
+            "sequence_number": 2,
+            "deterministic_record_id": "sha256:a768f0c210c39d50f796ca44"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "out_of_order_event_time_detected",
+      "intent": "detect descending event-time order inside one replay stream",
+      "expected_status": "failed",
+      "expected_finding_codes": [
+        "event_time_out_of_order"
+      ],
+      "records": [
+        {
+          "record_id": "ooo-001",
+          "event_time_utc": "2026-05-14T00:01:05Z",
+          "available_at_utc": "2026-05-14T00:01:06Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "option_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "later_event_first"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:01:10Z",
+            "sequence_number": 1,
+            "deterministic_record_id": "sha256:23bba061f3df38a0be2c2301"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        },
+        {
+          "record_id": "ooo-002",
+          "event_time_utc": "2026-05-14T00:01:02Z",
+          "available_at_utc": "2026-05-14T00:01:07Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "option_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "earlier_event_second"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:01:10Z",
+            "sequence_number": 2,
+            "deterministic_record_id": "sha256:37868af3a93f0c13f89b179f"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "future_leakage_window_detected",
+      "intent": "detect records not visible at the replay decision cutoff",
+      "expected_status": "failed",
+      "expected_finding_codes": [
+        "future_leakage_window"
+      ],
+      "records": [
+        {
+          "record_id": "leak-001",
+          "event_time_utc": "2026-05-14T00:02:10Z",
+          "available_at_utc": "2026-05-14T00:02:12Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "option_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "arrived_after_cutoff"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:02:05Z",
+            "sequence_number": 1,
+            "deterministic_record_id": "sha256:d38a705c0aff58f1918655f7"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "replay_metadata_mismatch_detected",
+      "intent": "detect sequence and deterministic replay identifier mismatch",
+      "expected_status": "failed",
+      "expected_finding_codes": [
+        "replay_metadata_mismatch"
+      ],
+      "records": [
+        {
+          "record_id": "meta-001",
+          "event_time_utc": "2026-05-14T00:03:00Z",
+          "available_at_utc": "2026-05-14T00:03:01Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "perpetual_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "first_replay_item"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:03:05Z",
+            "sequence_number": 1,
+            "deterministic_record_id": "sha256:2c9b3e297d8b5f02ef13c277"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        },
+        {
+          "record_id": "meta-002",
+          "event_time_utc": "2026-05-14T00:03:02Z",
+          "available_at_utc": "2026-05-14T00:03:03Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "perpetual_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "bad_replay_item"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:03:05Z",
+            "sequence_number": 3,
+            "deterministic_record_id": "sha256:000000000000000000000000"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "ok",
+            "synthetic": true,
+            "degraded": false,
+            "failure_reason_code": "none",
+            "failure_reason": ""
+          }
+        }
+      ]
+    },
+    {
+      "case_id": "degraded_failure_provenance_recorded",
+      "intent": "record a degraded synthetic row with explicit safe failure provenance",
+      "expected_status": "degraded",
+      "expected_finding_codes": [
+        "degraded_failure_provenance"
+      ],
+      "records": [
+        {
+          "record_id": "deg-001",
+          "event_time_utc": "2026-05-14T00:04:00Z",
+          "available_at_utc": "2026-05-14T00:04:09Z",
+          "payload": {
+            "instrument_family": "crypto_derivative_synthetic",
+            "instrument_kind": "option_reference",
+            "quote_currency": "USD_STABLE_REFERENCE",
+            "synthetic_observation": "delayed_public_snapshot"
+          },
+          "replay": {
+            "run_id": "rpq-20260514-public-demo",
+            "config_hash": "sha256:public-replay-config-v1",
+            "decision_cutoff_utc": "2026-05-14T00:04:10Z",
+            "sequence_number": 1,
+            "deterministic_record_id": "sha256:6864494cb18f6c9422bf0beb"
+          },
+          "provenance": {
+            "source": "synthetic_public_fixture",
+            "quality_status": "degraded",
+            "synthetic": true,
+            "degraded": true,
+            "failure_reason_code": "source_delayed_public_snapshot",
+            "failure_reason": "Synthetic row models delayed public visibility; replay should retain a degraded marker."
+          }
+        }
+      ]
+    }
+  ]
+}
