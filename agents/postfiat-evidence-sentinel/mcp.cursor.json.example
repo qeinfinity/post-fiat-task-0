@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "@postfiatorg/pft-chatbot-mcp-evidence-sentinel": {
+      "command": "npx",
+      "args": [
+        "@postfiatorg/pft-chatbot-mcp@0.5.1"
+      ],
+      "env": {
+        "BOT_SEED_FILE": "/Users/boscovich/.postfiat-agents/evidence-sentinel/BOT_SEED",
+        "PING_INTERVAL_MS": "900000"
+      }
+    }
+  }
+}
+

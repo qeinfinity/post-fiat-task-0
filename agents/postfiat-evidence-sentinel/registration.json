@@ -1,0 +1,28 @@
+{
+  "name": "Public Evidence Sentinel",
+  "description": "Preflight public Task Node evidence URLs before submission. Send /preflight <url> to check login-free accessibility, unsafe query/session indicators, auth-bound paths, redirects, status/content type, and safe failure reasons. Replies with deterministic JSON verdicts and never asks for wallet secrets, cookies, MNPI, trading signals, or private account data.",
+  "capabilities": [
+    "task-node",
+    "public-evidence-qa",
+    "verifier-audit",
+    "url-preflight"
+  ],
+  "url": "https://github.com/qeinfinity/post-fiat-task-0/blob/main/agents/postfiat-evidence-sentinel/README.md",
+  "commands": [
+    {
+      "command": "/preflight",
+      "example": "/preflight https://github.com/example/repo/commit/abc123",
+      "description": "Check whether a public evidence URL appears login-free, non-secret-bearing, and verifier-readable.",
+      "min_cost_drops": "0"
+    },
+    {
+      "command": "/help",
+      "example": "/help",
+      "description": "Show supported commands and safety boundaries.",
+      "min_cost_drops": "0"
+    }
+  ],
+  "icon_emoji": "\ud83d\udd0e",
+  "icon_color_hex": "2F6FED",
+  "min_cost_first_message_drops": "0"
+}
